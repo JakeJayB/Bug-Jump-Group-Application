@@ -217,18 +217,18 @@ public class MainGame extends GraphicsPane {
 			switch (player.weapon.getWeaponType()) {
 				case MELEE: {
 					if (player.isRightOrientation) {
-						playerImage.setImage("/Images/rightPlayerSword.png");
+						playerImage.setImage(program.getImage("Images/rightPlayerSword.png"));
 					} else {
-						playerImage.setImage("/Images/leftPlayerSword.png");
+						playerImage.setImage(program.getImage("Images/leftPlayerSword.png"));
 					}
 					playerWidth = (int) playerImage.getWidth();
 					return;
 				}
 				case HANDHELD:
 					if (player.isRightOrientation) {
-						playerImage.setImage("/Images/rightPlayerGun.png");
+						playerImage.setImage(program.getImage("Images/rightPlayerGun.png"));
 					} else {
-						playerImage.setImage("/Images/leftPlayerGun.png");
+						playerImage.setImage(program.getImage("Images/leftPlayerGun.png"));
 					}
 					playerWidth = (int) playerImage.getWidth();
 					return;
@@ -238,11 +238,11 @@ public class MainGame extends GraphicsPane {
 			}
 		} else {
 			if (player.isRightOrientation) {
-				playerImage.setImage("/Images/rightPlayer.png");
+				playerImage.setImage(program.getImage("Images/rightPlayer.png"));
 				playerWidth = (int) playerImage.getWidth();
 				return;
 			} else {
-				playerImage.setImage("/Images/leftPlayer.png");
+				playerImage.setImage(program.getImage("Images/leftPlayer.png"));
 				playerWidth = (int) playerImage.getWidth();
 				return;
 			}
@@ -355,9 +355,9 @@ public class MainGame extends GraphicsPane {
 				case HANDHELD: {
 					Bullet bullet = player.weapon.attack(new GPoint(player.getX(), player.getY()),
 							player.isRightOrientation);
-					GImage image = new GImage("/Images/rightBullet.png", bullet.getX(), bullet.getY());
+					GImage image = new GImage(program.getImage("Images/rightBullet.png"), bullet.getX(), bullet.getY());
 					if (!player.isRightOrientation) {
-						image.setImage("/Images/leftBullet.png");
+						image.setImage(program.getImage("Images/leftBullet.png"));
 					}
 					bulletMap.put(image, bullet);
 					program.add(image);
@@ -369,10 +369,10 @@ public class MainGame extends GraphicsPane {
 					GImage image;
 					if (player.isRightOrientation) {
 						bullet = new Bullet(player.getX() + 60, player.getY() - (64 - 50), 15, 0, true, 15);
-						image = new GImage("/Images/rightMeleeWave.png", bullet.getX(), bullet.getY());
+						image = new GImage(program.getImage("Images/rightMeleeWave.png"), bullet.getX(), bullet.getY());
 					} else {
 						bullet = new Bullet(player.getX() - 150, player.getY() - (64 - 50), 15, 180, true, 15);
-						image = new GImage("/Images/leftMeleeWave.png", bullet.getX(), bullet.getY());
+						image = new GImage(program.getImage("Images/leftMeleeWave.png"), bullet.getX(), bullet.getY());
 					}
 					bulletMap.put(image, bullet);
 					program.add(image);
@@ -485,7 +485,7 @@ public class MainGame extends GraphicsPane {
 					case HEART:
 						// Increases player hearts by 1 while hearts < 3 (The max amount of hearts)}
 						player.setHearts(player.getHearts() + 1);
-						heartGImage.setImage("/Images/heart UI_" + player.getHearts() + ".png");
+						heartGImage.setImage(program.getImage("Images/heart UI_" + player.getHearts() + ".png"));
 						break;
 					case CHEESE:
 						if (stars >= 1) {
@@ -493,7 +493,7 @@ public class MainGame extends GraphicsPane {
 						}
 						return false;
 					case STAR:
-						starGImage.setImage("/Images/star UI_" + ++stars + ".png");
+						starGImage.setImage(program.getImage("Images/star UI_" + ++stars + ".png"));
 						break;
 					case HANDHELD:
 						player.weapon = new Weapon(WeaponType.HANDHELD);
@@ -511,7 +511,7 @@ public class MainGame extends GraphicsPane {
 			} else if (enemiesMap.containsKey(gImage)) {
 				if (!(player.getHitCooldown() > 0)) {
 					player.setHearts(player.getHearts() - 1);
-					heartGImage.setImage("/Images/heart UI_" + player.getHearts() + ".png");
+					heartGImage.setImage(program.getImage("Images/heart UI_" + player.getHearts() + ".png"));
 					player.resetHitCooldown();
 				}
 				return false;
@@ -573,11 +573,10 @@ public class MainGame extends GraphicsPane {
 		GObject obj3 = program.getElementAt(key.getX() + key.getWidth() + 2, key.getY());
 		GObject obj4 = program.getElementAt(key.getX() + key.getWidth() + 2, key.getY() + key.getHeight());
 
-		if (val.isFriendly() == false
-				&& (obj1 == playerImage || obj2 == playerImage || obj3 == playerImage || obj4 == playerImage)) {
+		if (val.isFriendly() == false && (obj1 == playerImage || obj2 == playerImage || obj3 == playerImage || obj4 == playerImage)) {
 			if (!(player.getHitCooldown() > 0)) {
 				player.setHearts(player.getHearts() - 1);
-				heartGImage.setImage("/Images/heart UI_" + player.getHearts() + ".png");
+				heartGImage.setImage(program.getImage("Images/heart UI_" + player.getHearts() + ".png"));
 				player.resetHitCooldown();
 			}
 			return true;
@@ -638,7 +637,7 @@ public class MainGame extends GraphicsPane {
 					if (bullets != null) {
 						for (int i = 0; i < bullets.length; i++) {
 							Bullet b = bullets[i];
-							GImage bImage = new GImage("/Images/petalBullet.png", b.getX(), b.getY());
+							GImage bImage = new GImage(program.getImage("Images/petalBullet.png"), b.getX(), b.getY());
 							bulletMap.put(bImage, b);
 							program.add(bImage);
 						}
@@ -675,17 +674,17 @@ public class MainGame extends GraphicsPane {
 		switch (enemyType) {
 			case BEETLE: {
 				if (each.getOrientation()) { // if enemy is looking right
-					image.setImage("/Images/rightBeetle.png");
+					image.setImage(program.getImage("Images/rightBeetle.png"));
 				} else {
-					image.setImage("/Images/leftBeetle.png");
+					image.setImage(program.getImage("Images/leftBeetle.png"));
 				}
 				break;
 			}
 			case WORM:
 				if (each.getOrientation()) { // if enemy is looking right
-					image.setImage("/Images/rightWorm.png");
+					image.setImage(program.getImage("Images/rightWorm.png"));
 				} else {
-					image.setImage("/Images/leftWorm.png");
+					image.setImage(program.getImage("Images/leftWorm.png"));
 				}
 				break;
 			default:
@@ -868,8 +867,8 @@ public class MainGame extends GraphicsPane {
 	 * Sets up the main GUI on the main window
 	 */
 	private void setupGUI() {
-		heartGImage = new GImage("/Images/heart UI_3.png", 50, 50);
-		starGImage = new GImage("/Images/star UI_0.png", 0, 50);
+		heartGImage = new GImage(program.getImage("Images/heart UI_3.png"), 50, 50);
+		starGImage = new GImage(program.getImage("Images/star UI_0.png"), 0, 50);
 		starGImage.setLocation(dimension.getWidth() - starGImage.getWidth() - 50, starGImage.getY());
 
 		program.add(heartGImage);
@@ -887,7 +886,7 @@ public class MainGame extends GraphicsPane {
 	 * Sets up the Terrain on level
 	 */
 	private void setupTerrain() {
-		background = new GImage("/Images/Background" + level + ".jpeg");
+		background = new GImage(program.getImage("Images/Background" + level + ".jpeg"));
 		background.setSize(dimension.getWidth(), dimension.getHeight() + 10);
 		program.add(background);
 

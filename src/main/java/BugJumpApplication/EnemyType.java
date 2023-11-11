@@ -5,10 +5,10 @@ public enum EnemyType {
 	
 	public String toString() {
 		switch(this) {
-			case FLOWER: return "/Images/sunflower.png";
-			case SPIDER: return "/Images/spider.png";
-			case WORM: return "/Images/rightWorm.png";
-			case BEETLE: return "/Images/rightBeetle.png";
+			case FLOWER: return "Images/sunflower.png";
+			case SPIDER: return "Images/spider.png";
+			case WORM: return "Images/rightWorm.png";
+			case BEETLE: return "Images/rightBeetle.png";
 		}
 		return "n/a";
 	}

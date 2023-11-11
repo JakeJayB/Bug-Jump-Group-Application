@@ -12,7 +12,8 @@ public class FileReader{
 	private GImage playerGImage;
 	private HashMap<GImage, Collectable> collectablesMap = new HashMap<>();;
 	private HashMap<GImage, Enemy> enemiesMap = new HashMap<>();
-	private HashMap<GImage, Terrain> terrainMap = new HashMap<>();;
+	private HashMap<GImage, Terrain> terrainMap = new HashMap<>();
+	MainApplication program = new MainApplication();
 	
 	
 	public FileReader(int level) throws FileNotFoundException {
@@ -20,7 +21,7 @@ public class FileReader{
 	}
 
 	private void readLevel(int level) throws FileNotFoundException {
-		File file = new File("media/Levels/level" + level + ".txt");
+		File file = new File(System.getProperty("user.dir") + "/media/Levels/level" + level + ".txt");
 		Scanner scanner = new Scanner(file);
 		String currentLine;
 		
@@ -31,7 +32,7 @@ public class FileReader{
 		for(int i = 0; i < Integer.parseInt(currentLine); i++) {
 			String[] content = scanner.nextLine().trim().split("-");
 			player = new Player(Integer.parseInt(content[0]), Integer.parseInt(content[1]));
-			playerGImage = new GImage("/Images/rightPlayer.png", player.getX(), player.getY());
+			playerGImage = new GImage(program.getImage("Images/rightPlayer.png"), player.getX(), player.getY());
 		}
 		
 		
@@ -44,7 +45,7 @@ public class FileReader{
 			Enemy enemy;
 			String[] content = scanner.nextLine().trim().split("-");			
 			enemy = new Enemy(Integer.parseInt(content[0]), Integer.parseInt(content[1]), EnemyType.NONE.getType(Integer.parseInt(content[2])));
-			enemiesMap.put(new GImage(enemy.getEnemyType().toString(), enemy.getX(), enemy.getY()), enemy);
+			enemiesMap.put(new GImage(program.getImage(enemy.getEnemyType().toString()), enemy.getX(), enemy.getY()), enemy);
 			
 		}		
 		scanner.nextLine();
@@ -59,7 +60,7 @@ public class FileReader{
 			terrain = new Terrain(Integer.parseInt(content[0]), Integer.parseInt(content[1]),
 								  Integer.parseInt(content[2]), Integer.parseInt(content[3]), 
 								  TerrainType.NONE.getType(Integer.parseInt(content[4])));
-			image = new GImage(terrain.getTerrainType().toString(), terrain.getX(), terrain.getY());
+			image = new GImage(program.getImage(terrain.getTerrainType().toString()), terrain.getX(), terrain.getY());
 			image.setSize(terrain.getWidth(), terrain.getHeight());
 			terrainMap.put(image, terrain);
 		}		
@@ -74,7 +75,7 @@ public class FileReader{
 			GImage image;
 			String[] content = scanner.nextLine().trim().split("-");			
 			collectable = new Collectable(Integer.parseInt(content[0]), Integer.parseInt(content[1]), CollectableType.NONE.getType(Integer.parseInt(content[2])));
-			image = new GImage(collectable.getCType().toString(), collectable.getX(), collectable.getY());
+			image = new GImage(program.getImage(collectable.getCType().toString()), collectable.getX(), collectable.getY());
 			collectablesMap.put(image, collectable);
 		}	
 		
@@ -85,6 +86,7 @@ public class FileReader{
 	public static void main(String[] args) throws FileNotFoundException {
 		FileReader file = new FileReader(1);
 	}
+	
 	public GImage getplayerImage() {
 		// TODO Auto-generated method stub
 		return playerGImage;

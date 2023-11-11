@@ -25,6 +25,17 @@ javafx {
 	modules = ['javafx.swing', 'javafx.media']
 }
 
+// could be deleted
+jar {
+    manifest {
+        attributes 'Main-Class': 'BugJumpApplication.MainApplication'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
