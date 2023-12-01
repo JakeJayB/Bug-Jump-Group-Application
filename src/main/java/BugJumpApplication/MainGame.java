@@ -111,6 +111,7 @@ public class MainGame extends GraphicsPane {
 		program.setupTimer(25);
 		player.startTimer();
 		fileReader = null;
+		System.gc();
 	}
 
 	@Override
