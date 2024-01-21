@@ -45,6 +45,7 @@ public class MainApplication extends GraphicsApplication {
 		switchToScreen(new LevelCreator(this));
 //		switchToScreen(new LevelSelector(this));
 
+
 	}
 
 	public void switchToGame(int level) {

@@ -78,16 +78,17 @@ public class LevelSelector extends GraphicsPane {
 		program.add(button3);
 		program.add(button4);
 
-		pageButton = new GImage("/Images/Page1Button.png", 0, button4.getY());
+//		pageButton = new GImage("Images/Page1Button.png", 0, button4.getY());
+		pageButton = new GImage(program.getImage("Images/Page1Button.png"), 0, button4.getY());
 		pageButton.setSize(150, 100);
 		pageButton.setLocation(dimension.getWidth() / 2 - pageButton.getWidth() / 2, pageButton.getY());
 		program.add(pageButton);
 
 
-		LV1 = new GImage("/Images/LV1.png");
-		LV2 = new GImage("/Images/LV2.png");
-		LV3 = new GImage("/Images/LV3.png");
-		LV4 = new GImage("/Images/LV4.png", 100, 200);
+		LV1 = new GImage(program.getImage("Images/LV1.png"));
+		LV2 = new GImage(program.getImage("Images/LV2.png"));
+		LV3 = new GImage(program.getImage("Images/LV3.png"));
+		LV4 = new GImage(program.getImage("Images/LV4.png"), 100, 200);
 		LV1.setBounds(button1.getX(), 150, BUTTONWIDTH, 250);
 		LV2.setBounds(button2.getX(), 150, BUTTONWIDTH, 250);
 		LV3.setBounds(button1.getX(), 550, BUTTONWIDTH, 250);
@@ -99,7 +100,7 @@ public class LevelSelector extends GraphicsPane {
 		
 		readSaveFile(1);
 		program.getGCanvas().setBackground(Color.decode("#5f6c5a"));
-		backArrow = new GImage("/Images/backArrow.png", 10, 10);
+		backArrow = new GImage(program.getImage("Images/backArrow.png"), 10, 10);
 		backArrow.setSize(100, 75);
 		program.add(backArrow);
 	}
@@ -173,7 +174,7 @@ public class LevelSelector extends GraphicsPane {
 		String currentLine;
 		FileReader file;
 		try {
-			file = new FileReader("media/saveFile.txt");
+			file = new FileReader(System.getProperty("user.dir") + "/" + "media/saveFile.txt");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
@@ -189,7 +190,7 @@ public class LevelSelector extends GraphicsPane {
 			
 			double xPos = buttonsGPoint.get(i).getX()+(BUTTONWIDTH/2-150/2);
 			double yPos = buttonsGPoint.get(i).getY()-50;
-			program.add(new GImage("/Images/star UI_" +currentChar+ ".png", xPos, yPos));
+			program.add(new GImage(program.getImage("Images/star UI_" +currentChar+ ".png"), xPos, yPos));
 			
 		}
 		scanner.close();
@@ -197,7 +198,8 @@ public class LevelSelector extends GraphicsPane {
 	
 	private void switchPage() {
 		if (isOnSecondPage) {
-			pageButton.setImage("/Images/Page1Button.png");
+//			pageButton.setImage("Images/Page1Button.png");
+			pageButton.setImage(program.getImage("Images/Page1Button.png"));
 			pageButton.setSize(150, 100);
 			pageButton.setLocation(dimension.getWidth() / 2 - pageButton.getWidth() / 2, pageButton.getY());
 			button1.setLabel("Level 1");
@@ -207,17 +209,17 @@ public class LevelSelector extends GraphicsPane {
 			
 			isOnSecondPage = false;
 		
-			LV1.setImage("/Images/LV1.png");
-			LV2.setImage("/Images/LV2.png");
-			LV3.setImage("/Images/LV3.png");
-			LV4.setImage("/Images/LV4.png");
+			LV1.setImage(program.getImage("Images/LV1.png"));
+			LV2.setImage(program.getImage("Images/LV2.png"));
+			LV3.setImage(program.getImage("Images/LV3.png"));
+			LV4.setImage(program.getImage("Images/LV4.png"));
 			LV1.setBounds(button1.getX(), 150, BUTTONWIDTH, 250);
 			LV2.setBounds(button2.getX(), 150, BUTTONWIDTH, 250);
 			LV3.setBounds(button1.getX(), 550, BUTTONWIDTH, 250);
 			LV4.setBounds(button2.getX(), 550, BUTTONWIDTH, 250);
 			readSaveFile(1);
 		} else {
-			pageButton.setImage("/Images/Page2Button.png");
+			pageButton.setImage(program.getImage("Images/Page2Button.png"));
 			pageButton.setSize(150, 100);
 			pageButton.setLocation(dimension.getWidth() / 2 - pageButton.getWidth() / 2, pageButton.getY());
 			button1.setLabel("Level 5");
@@ -227,10 +229,10 @@ public class LevelSelector extends GraphicsPane {
 			
 			isOnSecondPage = true;
 	
-			LV1.setImage("/Images/LV5.png");
-			LV2.setImage("/Images/LV6.png");
-			LV3.setImage("/Images/LV7.png");
-			LV4.setImage("/Images/LV8.png");
+			LV1.setImage(program.getImage("Images/LV5.png"));
+			LV2.setImage(program.getImage("Images/LV6.png"));
+			LV3.setImage(program.getImage("Images/LV7.png"));
+			LV4.setImage(program.getImage("Images/LV8.png"));
 			LV1.setBounds(button1.getX(), 150, BUTTONWIDTH, 250);
 			LV2.setBounds(button2.getX(), 150, BUTTONWIDTH, 250);
 			LV3.setBounds(button1.getX(), 550, BUTTONWIDTH, 250);
