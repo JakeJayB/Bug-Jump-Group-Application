@@ -6,10 +6,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.HashSet;
 
-import javax.print.attribute.HashPrintServiceAttributeSet;
 
 import acm.graphics.GImage;
 import acm.graphics.GObject;
@@ -54,12 +52,13 @@ public class LevelCreator extends GraphicsPane {
 		weapons =  new HashSet<GImage>();
 		enemies =  new HashSet<GImage>();
 		collectables =  new HashSet<GImage>();
-		
+		program.setupTimer(25);
 		setupGUI();
 	}
 
 	@Override
 	public void hideContents() {
+		program.removeAll();
 		dimension = null;
 		terrain = null;
 		weapons = null;
@@ -74,6 +73,7 @@ public class LevelCreator extends GraphicsPane {
 		coordText.setFont("Arial-Bold-Italic-30");
 		coordText.setColor(Color.black);
 		program.add(coordText);
+		
 		
 		GParagraph p = new GParagraph("Obj Width:", 0,  75);
 		p.setFont("Arial-Bold-20");
@@ -122,17 +122,62 @@ public class LevelCreator extends GraphicsPane {
 			collectables.remove(obj);
 		}
 	}
+	
+	public void checkBoundries() {
+		
+		/*Checks the boundries of the mouse cursor. Moves screen when cursor
+		 * gets closer to the edge
+		 */
+		int x = coords[0]; 
+		if(resizeImage != null) return;
+		
+		if(x <= dimension.getWidth()*.25) {
+			playerImage.move(5, 0);
+			for(GImage img : terrain) {
+				img.move(5, 0);
+			}
+			for(GImage img : weapons) {
+				img.move(5, 0);
+			}		
+			for(GImage img : enemies) {
+				img.move(5, 0);
+			}
+			for(GImage img : collectables) {
+				img.move(5, 0);
+			}
+		}
+		else if(x >= dimension.getWidth()*.75) {
+			playerImage.move(-5, 0);
+			for(GImage img : terrain) {
+				img.move(-5, 0);
+			}
+			for(GImage img : weapons) {
+				img.move(-5, 0);
+			}		
+			for(GImage img : enemies) {
+				img.move(-5, 0);
+			}
+			for(GImage img : collectables) {
+				img.move(-5, 0);
+			}
+		}
+	}
 
 	@Override
 	public void performAction(ActionEvent e) {
-		// TODO Auto-generated method stub
+		checkBoundries();
 		
+		coordText.sendToFront();
+		minusWButton.sendToFront();
+		plusWButton.sendToFront();
+		minusHButton.sendToFront();
+		plusHButton.sendToFront();
+		resizeText.sendToFront();
 	}
 
 	
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
 		coords[0] = e.getX(); coords[1] = e.getY();
 		coordText.setText("( " + coords[0] + " , " + coords[1] + " )");
 	}
@@ -155,7 +200,6 @@ public class LevelCreator extends GraphicsPane {
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 		System.out.println("This is mouse clicked");
 		GObject obj = program.getElementAt(e.getX(), e.getY());
@@ -163,7 +207,7 @@ public class LevelCreator extends GraphicsPane {
 			
 			if(obj instanceof GImage && obj != playerImage) {
 				resizeImage = (GImage) obj;
-				resizeText.setText("Resize obj. selectetd");
+				resizeText.setText("Resize obj. selected");
 				resizeText.setColor(Color.green);
 			}
 			else if (obj instanceof GButton && resizeImage != null) {
@@ -190,6 +234,8 @@ public class LevelCreator extends GraphicsPane {
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
 		coords[0] = e.getX(); coords[1] = e.getY();
+		coordText.setText("( " + coords[0] + " , " + coords[1] + " )");
+
 		resetResizeImg();
 		
 		if(moveImage != null) {
