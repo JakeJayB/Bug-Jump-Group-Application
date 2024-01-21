@@ -95,8 +95,7 @@ public class MainGame extends GraphicsPane {
 		timerCount = 0;
 		isGamePaused = false;
 
-		// audio = audio.getInstance();
-		// audio.playSoundWithOptions("sounds", "r2d2.mp3", true);
+    
 		try {
 			fileReader = new FileReader(level);
 		} catch (FileNotFoundException e) {

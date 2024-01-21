@@ -42,7 +42,9 @@ public class MainApplication extends GraphicsApplication {
 
 	public void switchToLevelSelector() {
 		startMusic();
-		switchToScreen(new LevelSelector(this));
+		switchToScreen(new LevelCreator(this));
+//		switchToScreen(new LevelSelector(this));
+
 
 	}
 
