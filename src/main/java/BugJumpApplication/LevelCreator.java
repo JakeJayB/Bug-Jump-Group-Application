@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
 
+import javax.print.attribute.HashPrintServiceAttributeSet;
 
 import acm.graphics.GImage;
 import acm.graphics.GObject;
@@ -18,10 +20,10 @@ public class LevelCreator extends GraphicsPane {
 	private Dimension dimension;
 	
 	
-	private ArrayList<GImage> terrain;
-	private ArrayList<GImage> enemies;
-	private ArrayList<GImage> weapons;
-	private ArrayList<GImage> collectables;
+	private HashSet<GImage> terrain;
+	private HashSet<GImage> enemies;
+	private HashSet<GImage> weapons;
+	private HashSet<GImage> collectables;
 
 	private int[] coords = new int[2];
 	private int offsetX = 0;
@@ -41,16 +43,17 @@ public class LevelCreator extends GraphicsPane {
 	
 	public LevelCreator(MainApplication e) {
 		program = e;
+		
 
 	}
 
 	@Override
 	public void showContents() {
 		dimension = Toolkit.getDefaultToolkit().getScreenSize();
-		terrain = new ArrayList<GImage>();
-		enemies =  new ArrayList<GImage>();
-		weapons =  new ArrayList<GImage>();
-		collectables =  new ArrayList<GImage>();
+		terrain = new HashSet<GImage>();
+		weapons =  new HashSet<GImage>();
+		enemies =  new HashSet<GImage>();
+		collectables =  new HashSet<GImage>();
 		
 		setupGUI();
 	}
@@ -59,8 +62,8 @@ public class LevelCreator extends GraphicsPane {
 	public void hideContents() {
 		dimension = null;
 		terrain = null;
-		enemies = null;
 		weapons = null;
+		enemies = null;
 		collectables = null;
 		System.gc();
 	}
@@ -104,6 +107,21 @@ public class LevelCreator extends GraphicsPane {
 		resizeText.setText("No resize obj. selected");
 		resizeText.setColor(Color.red);
 	}
+	
+	public void deleteObj(GImage obj) {
+		if(terrain.contains(obj)) {
+			terrain.remove(obj);
+		}
+		else if(enemies.contains(obj)) {
+			enemies.remove(obj);
+		}
+		else if(weapons.contains(obj)) {
+			weapons.remove(obj);
+		}
+		else if(collectables.contains(obj)) {
+			collectables.remove(obj);
+		}
+	}
 
 	@Override
 	public void performAction(ActionEvent e) {
@@ -131,9 +149,6 @@ public class LevelCreator extends GraphicsPane {
 			moveImage = (GImage) obj;
 			offsetX = (int) (e.getX() - moveImage.getX());
 			offsetY = (int) (e.getY() - moveImage.getY());
-		}
-		else if (obj instanceof GButton) {
-			
 		}
 		
 	}
@@ -206,6 +221,7 @@ public class LevelCreator extends GraphicsPane {
 			case 8:
 				if(resizeImage == null) return;
 				program.remove(resizeImage);
+				deleteObj(resizeImage);
 				resetResizeImg();
 				break;
 			case 49: // spawn grass terrain
@@ -214,11 +230,51 @@ public class LevelCreator extends GraphicsPane {
 				program.add(img);
 				terrain.add(img);
 				break;
-			case 50: // spawn spike terrain 
-				img = new GImage(program.getImage("Images/spike.png"), x, y);
-				img.setSize(100, 50);
+			case 50: // spawn star terrain 
+				img = new GImage(program.getImage("Images/star.png"), x, y);
+				collectables.add(img);
 				program.add(img);	
-				terrain.add(img);
+				break;
+			case 51: // spawn heart collectable
+				img = new GImage(program.getImage("Images/heart.png"), x, y);
+				collectables.add(img);
+				program.add(img);
+				break;
+			case 52: // spawn gun weapon
+				img = new GImage(program.getImage("Images/handheld.png"), x, y);
+				weapons.add(img);
+				program.add(img);
+				break;
+			case 53: // spawn sword weapon
+				img = new GImage(program.getImage("Images/melee.png"), x, y);
+				weapons.add(img);
+				program.add(img);
+				break;
+			case 54: // spawn beetle enemy
+				img = new GImage(program.getImage("Images/rightBeetle.png"), x, y);
+				enemies.add(img);
+				program.add(img);
+				break;
+			case 55: // spawn flower enemy
+				img = new GImage(program.getImage("Images/sunflower.png"), x, y);
+				enemies.add(img);
+				program.add(img);
+				break;
+			case 56: // spawn spider enemy
+				img = new GImage(program.getImage("Images/spider.png"), x, y);
+				enemies.add(img);
+				program.add(img);
+				break;
+			case 57: // spawn worm enemy
+				img = new GImage(program.getImage("Images/rightWorm.png"), x, y);
+				enemies.add(img);
+				program.add(img);
+				break;
+			case 48: // spawn cheese collectable
+				img = new GImage(program.getImage("Images/cheese.png"), x, y);
+				collectables.add(img);
+				program.add(img);
+				break;
 			default:
 				break;
 		}
