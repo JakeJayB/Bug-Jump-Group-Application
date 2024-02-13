@@ -102,25 +102,20 @@ public class LevelCreator extends GraphicsPane {
 		
 	}
 	
+	
 	public void resetResizeImg() {
 		resizeImage = null;
 		resizeText.setText("No resize obj. selected");
 		resizeText.setColor(Color.red);
 	}
 	
+	
 	public void deleteObj(GImage obj) {
-		if(terrain.contains(obj)) {
-			terrain.remove(obj);
-		}
-		else if(enemies.contains(obj)) {
-			enemies.remove(obj);
-		}
-		else if(weapons.contains(obj)) {
-			weapons.remove(obj);
-		}
-		else if(collectables.contains(obj)) {
-			collectables.remove(obj);
-		}
+		
+		if(terrain.contains(obj)) terrain.remove(obj);
+		else if(enemies.contains(obj)) enemies.remove(obj);
+		else if(weapons.contains(obj)) weapons.remove(obj);
+		else if(collectables.contains(obj)) collectables.remove(obj);
 	}
 	
 	public void checkBoundries() {
@@ -131,35 +126,35 @@ public class LevelCreator extends GraphicsPane {
 		int x = coords[0]; 
 		if(resizeImage != null) return;
 		
-		if(x <= dimension.getWidth()*.25) {
-			playerImage.move(5, 0);
-			for(GImage img : terrain) {
-				img.move(5, 0);
-			}
-			for(GImage img : weapons) {
-				img.move(5, 0);
-			}		
-			for(GImage img : enemies) {
-				img.move(5, 0);
-			}
-			for(GImage img : collectables) {
-				img.move(5, 0);
-			}
+		
+		
+		if(x <= dimension.getWidth()*.1) {
+			playerImage.move(10, 0);
+			for(GImage img : terrain) img.move(10, 0);
+			for(GImage img : weapons) img.move(10, 0);		
+			for(GImage img : enemies) img.move(10, 0);
+			for(GImage img : collectables) img.move(10, 0);
 		}
-		else if(x >= dimension.getWidth()*.75) {
+		else if(x >= dimension.getWidth()*.9) {
+			playerImage.move(-10, 0);
+			for(GImage img : terrain) img.move(-10, 0);
+			for(GImage img : weapons) img.move(-10, 0);		
+			for(GImage img : enemies) img.move(-10, 0);
+			for(GImage img : collectables)  img.move(-10, 0);
+		}
+		else if(x <= dimension.getWidth()*.2) {
+			playerImage.move(5, 0);
+			for(GImage img : terrain) img.move(5, 0);
+			for(GImage img : weapons) img.move(5, 0);		
+			for(GImage img : enemies) img.move(5, 0);
+			for(GImage img : collectables) img.move(5, 0);
+		}
+		else if(x >= dimension.getWidth()*.8) {
 			playerImage.move(-5, 0);
-			for(GImage img : terrain) {
-				img.move(-5, 0);
-			}
-			for(GImage img : weapons) {
-				img.move(-5, 0);
-			}		
-			for(GImage img : enemies) {
-				img.move(-5, 0);
-			}
-			for(GImage img : collectables) {
-				img.move(-5, 0);
-			}
+			for(GImage img : terrain) img.move(-5, 0);
+			for(GImage img : weapons) img.move(-5, 0);		
+			for(GImage img : enemies) img.move(-5, 0);
+			for(GImage img : collectables) img.move(-5, 0);
 		}
 	}
 
@@ -185,7 +180,6 @@ public class LevelCreator extends GraphicsPane {
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		System.out.println("This is mouse pressed");
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if(obj == null) { return;}
@@ -203,36 +197,36 @@ public class LevelCreator extends GraphicsPane {
 		
 		System.out.println("This is mouse clicked");
 		GObject obj = program.getElementAt(e.getX(), e.getY());
-		if(obj != null) {
+		if(obj == null) return;
+		
 			
-			if(obj instanceof GImage && obj != playerImage) {
-				resizeImage = (GImage) obj;
-				resizeText.setText("Resize obj. selected");
-				resizeText.setColor(Color.green);
+		if(obj instanceof GImage && obj != playerImage) {
+			resizeImage = (GImage) obj;
+			resizeText.setText("Resize obj. selected");
+			resizeText.setColor(Color.green);
+		}
+		else if (obj instanceof GButton && resizeImage != null) {
+			obj = (GButton) obj;
+			System.out.println("Gbutton selected");
+			if(obj == minusWButton) {
+				resizeImage.setSize(resizeImage.getWidth()-20, resizeImage.getHeight());
 			}
-			else if (obj instanceof GButton && resizeImage != null) {
-				obj = (GButton) obj;
-				System.out.println("Gbutton selected");
-				if(obj == minusWButton) {
-					resizeImage.setSize(resizeImage.getWidth()-20, resizeImage.getHeight());
-				}
-				else if (obj == plusWButton) {
-					resizeImage.setSize(resizeImage.getWidth()+20, resizeImage.getHeight());
-				}
-				else if(obj == minusHButton) {
-					resizeImage.setSize(resizeImage.getWidth(), resizeImage.getHeight()-20);
-				}
-				else if(obj == plusHButton) {
-					resizeImage.setSize(resizeImage.getWidth(), resizeImage.getHeight()+20);
-				}
+			else if (obj == plusWButton) {
+				resizeImage.setSize(resizeImage.getWidth()+20, resizeImage.getHeight());
 			}
+			else if(obj == minusHButton) {
+				resizeImage.setSize(resizeImage.getWidth(), resizeImage.getHeight()-20);
+			}
+			else if(obj == plusHButton) {
+				resizeImage.setSize(resizeImage.getWidth(), resizeImage.getHeight()+20);
+			}
+			
 		}
 	}
 	
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
 		coords[0] = e.getX(); coords[1] = e.getY();
 		coordText.setText("( " + coords[0] + " , " + coords[1] + " )");
 
@@ -248,13 +242,11 @@ public class LevelCreator extends GraphicsPane {
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		moveImage = null;
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		int key = e.getKeyCode();
 		int x = coords[0] % (int) dimension.getWidth();
 		int y = coords[1] % (int) dimension.getHeight();
