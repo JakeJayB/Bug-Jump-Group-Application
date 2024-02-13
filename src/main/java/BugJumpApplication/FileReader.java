@@ -10,12 +10,14 @@ public class FileReader{
 
 	private Player player;
 	private GImage playerGImage;
+	private MainApplication program;
 	private HashMap<GImage, Collectable> collectablesMap = new HashMap<>();
 	private HashMap<GImage, Enemy> enemiesMap = new HashMap<>();
 	private HashMap<GImage, Terrain> terrainMap = new HashMap<>();
 	
 	
-	public FileReader(int level) throws FileNotFoundException {
+	public FileReader(int level, MainApplication e) throws FileNotFoundException {
+		program = e;
 		readLevel(level);
 	}
 

@@ -97,7 +97,7 @@ public class MainGame extends GraphicsPane {
 
     
 		try {
-			fileReader = new FileReader(level);
+			fileReader = new FileReader(level, program);
 		} catch (FileNotFoundException e) {
 			System.out.println("No Level File for Level: " + level);
 		}
