@@ -622,8 +622,7 @@ public class MainGame extends GraphicsPane {
 		for (Entry<GImage, Enemy> entry : enemiesMap.entrySet()) {
 			Enemy each = entry.getValue();
 			GImage eachImage = entry.getKey();
-			if (each.getAwareness()
-					&& (each.getEnemyType() == EnemyType.BEETLE || each.getEnemyType() == EnemyType.FLOWER)) {
+			if (each.getAwareness() && (each.getEnemyType() == EnemyType.BEETLE || each.getEnemyType() == EnemyType.FLOWER)) {
 				if (player.getX() <= each.getX()) {
 					each.setIsRightOrientation(false);
 				} else {
